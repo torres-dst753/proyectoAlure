@@ -12,41 +12,41 @@ function asignarTextoElemento(elemento, texto) {
     return;
 }
 
-function agregarAmigo() {
-    //let nuevaLongitud = amigosSecretos.push("Naranja");
-    //obtengo nombre del amigo ingresado en la caja de texto
-    let nombreAmigo = document.getElementById('amigo').value;
+function mostrarListaAmigos(vector, lista) {
     let mostrarLista = ' ' ;
+    vector.forEach(misAmigos => {
+        mostrarLista=mostrarLista + `<li>${misAmigos}</li>`
+        asignarTextoElemento(`${lista}`,`${mostrarLista}`);
+        
+      });
+      return;
+}
 
+function agregarAmigo() {
+    let nombreAmigo = document.getElementById('amigo').value;
+  
     if (nombreAmigo !== '') {
         amigosSecretos.push(nombreAmigo);
-        amigosSecretos.forEach(misAmigos => {
-          mostrarLista=mostrarLista + `<li>${misAmigos}</li>`
-          asignarTextoElemento('listaAmigos',`${mostrarLista}`);
-          
-        }); 
+        console.log(amigosSecretos);
+        mostrarListaAmigos(amigosSecretos, 'listaAmigos');
     } else {
-        alert('No hay un nombre para agregar a la lista');
+        alert('No hay un nombre para agregar a la lista. \rIngrese uno por favor!!');
     }
     document.getElementById('amigo').value=""
     return;
 };
 
+
 function sortearAmigo() {
     let numeroAmigos= amigosSecretos.length;
     let numeroGanadores=amigosGanadores.length; 
     
-    if (numeroAmigos !== numeroGanadores) || (numeroGanadores == 0 ) {
+    if (numeroAmigos !== numeroGanadores) {
         let numeroSorteo=generarNumero();        
         console.log('Sorteo numero '+numeroSorteo+' Amigos '+numeroAmigos);
-        let mostrarLista = ' ' ;
-
-        amigosGanadores.push(amigosSecretos[numeroSorteo]);
-        amigosGanadores.forEach(misAmigos => {
-        mostrarLista=mostrarLista + `<li>${misAmigos}</li>`
-        asignarTextoElemento('resultado',`${mostrarLista}`);
         
-        });
+        amigosGanadores.push(amigosSecretos[numeroSorteo]);
+        mostrarListaAmigos(amigosGanadores, 'resultado');
         document.getElementById('amigo').value=""
         return;;
     }else{
@@ -54,6 +54,7 @@ function sortearAmigo() {
     }        
     
 };
+
 
 function generarNumero() {
     let numeroAmigos= amigosSecretos.length;
